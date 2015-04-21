@@ -1,0 +1,23 @@
+---
+
+# common
+- hosts: all
+  sudo: yes
+  gather_facts: no
+
+  roles:
+    - common
+
+# web
+- hosts: web
+  sudo: yes
+
+  roles:
+    - web
+
+# lb
+- hosts: lb
+  sudo: yes  
+
+  roles:
+    - lb

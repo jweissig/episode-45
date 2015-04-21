@@ -1,0 +1,38 @@
+# {{ ansible_managed }}
+user              www-data;
+
+worker_processes  1;
+pid        /var/run/nginx.pid;
+worker_rlimit_nofile 1024;
+
+events {
+    worker_connections  512;
+}
+
+
+http {
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        tcp_nopush "on";
+        tcp_nodelay "on";
+        #keepalive_timeout "65";
+        access_log "/var/log/nginx/access.log";
+        error_log "/var/log/nginx/error.log";
+        server_tokens off;
+        types_hash_max_size 2048;
+
+        # https://philio.me/backend-server-host-name-as-a-custom-header-with-nginx/
+        add_header X-Backend-Server $hostname;
+
+        # disable cache used for testing
+        add_header Cache-Control private;
+        add_header Last-Modified "";
+        sendfile off;
+        expires off;
+        etag off;
+
+        include /etc/nginx/conf.d/*.conf;
+        include /etc/nginx/sites-enabled/*;
+}
+

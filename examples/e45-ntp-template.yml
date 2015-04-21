@@ -1,0 +1,23 @@
+---
+- hosts: all
+  sudo: yes
+  gather_facts: no  
+  vars:
+    noc_ntpserver: server 0.ca.pool.ntp.org
+
+  tasks:
+
+  - name: install ntp
+    apt: name=ntp state=installed update_cache=yes
+
+  - name: write our ntp.conf
+    template: src=/home/vagrant/files/ntp.conf.j2 dest=/etc/ntp.conf mode=644 owner=root group=root
+    notify: restart ntp
+
+  - name: start ntp
+    service: name=ntp state=started
+
+  handlers:
+
+  - name: restart ntp
+    service: name=ntp state=restarted

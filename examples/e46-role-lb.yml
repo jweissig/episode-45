@@ -1,0 +1,15 @@
+---
+
+# web
+- hosts: web
+  sudo: yes
+
+  roles:
+    - web
+
+# lb
+- hosts: lb
+  sudo: yes  
+
+  roles:
+    - lb

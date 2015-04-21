@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: no
+  serial: 1
+
+  tasks:
+
+  - name: sleep for 5 seconds
+    shell: /bin/sleep 5
+
+

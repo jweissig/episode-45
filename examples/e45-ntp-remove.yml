@@ -1,0 +1,9 @@
+---
+- hosts: all
+  sudo: yes
+  gather_facts: no
+
+  tasks:
+
+  - name: remove ntp
+    apt: name=ntp state=absent

@@ -1,0 +1,45 @@
+# {{ ansible_managed }}
+global
+    log         127.0.0.1 local2 
+
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        root
+    group       root
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats level admin
+
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 3000
+
+    # enable stats uri
+    stats enable
+    stats uri /haproxy?stats
+
+backend app
+    {% for host in groups['lb'] %}
+       listen episode46 {{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:80
+    {% endfor %}
+    balance     roundrobin
+    {% for host in groups['web'] %}
+        server {{ host }} {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }} check port 80
+    {% endfor %}
+
