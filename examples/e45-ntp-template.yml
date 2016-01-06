@@ -3,7 +3,7 @@
   sudo: yes
   gather_facts: no  
   vars:
-    noc_ntpserver: server 0.ca.pool.ntp.org
+    noc_ntpserver: 0.ca.pool.ntp.org
 
   tasks:
 
