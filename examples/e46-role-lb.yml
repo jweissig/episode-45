@@ -2,14 +2,14 @@
 
 # web
 - hosts: web
-  sudo: yes
+  become: yes
 
   roles:
     - web
 
 # lb
 - hosts: lb
-  sudo: yes  
+  become: yes  
 
   roles:
     - lb
