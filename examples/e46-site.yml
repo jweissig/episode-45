@@ -2,7 +2,7 @@
 
 # common
 - hosts: all
-  sudo: yes
+  become: yes
   gather_facts: no
 
   tasks:
@@ -12,7 +12,7 @@
 
 # web
 - hosts: web
-  sudo: yes
+  become: yes
 
   tasks:
 
@@ -37,7 +37,7 @@
 
 # lb
 - hosts: lb
-  sudo: yes  
+  become: yes  
 
   tasks:
 

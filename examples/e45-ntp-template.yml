@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   gather_facts: no  
   vars:
     noc_ntpserver: server 0.ca.pool.ntp.org
