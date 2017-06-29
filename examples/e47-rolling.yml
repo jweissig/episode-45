@@ -23,7 +23,7 @@
   - name: disable server in haproxy
     shell: echo "disable server episode46/{{ inventory_hostname }}" | socat stdio /var/lib/haproxy/stats
     delegate_to: "{{ item }}"
-    with_items: groups.lb
+    with_items: "{{ groups.lb }}"
 
   tasks:
 
@@ -57,7 +57,7 @@
   - name: enable server in haproxy
     shell: echo "enable server episode46/{{ inventory_hostname }}" | socat stdio /var/lib/haproxy/stats
     delegate_to: "{{ item }}"
-    with_items: groups.lb
+    with_items: "{{ groups.lb }}"
 
 # lb
 - hosts: lb
